@@ -72,38 +72,7 @@ def clip0_255(img):
     clip_img = np.clip(img, a_min=0, a_max=255).astype(np.uint8)
     # logger.debug(clip_img)
     return clip_img
-  
-
-def norm_color2(w1, w2, w3):            
-    H, W = w1.shape
-    x_neg = rgb2hsv(X_COLOR[1]); x_pos = rgb2hsv(X_COLOR[0])
-    y_neg = rgb2hsv(Y_COLOR[1]); y_pos = rgb2hsv(Y_COLOR[0])
-    z_neg = rgb2hsv(Z_COLOR[1]); z_pos = rgb2hsv(Z_COLOR[0])
-    x_neg = x_neg.astype(np.float32)
-    x_pos = x_pos.astype(np.float32)
-    y_neg = y_neg.astype(np.float32)
-    y_pos = y_pos.astype(np.float32)
-    z_neg = z_neg.astype(np.float32)
-    z_pos = z_pos.astype(np.float32)
-    
-    # w1 = (w1 + 1) / 2.0; w2 = (w2 + 1) / 2.0; w3 = (w3 + 1) / 2.0; 
-    w1 = np.reshape(w1, (H, W, 1))
-    w2 = np.reshape(w2, (H, W, 1))
-    w3 = np.reshape(w3, (H, W, 1))
-    
-    hsv = x_neg * w1 + x_neg + \
-            y_neg * w1 + y_neg  + \
-            z_neg * w3 + z_neg 
-
-    # hsv = np.clip() 
-    hsv = clip0_255(hsv)
-    rgb_img = hsv2rgb(hsv)
-    rgb_img = clip0_255(rgb_img)       
-    return rgb_img
-
-    
-                         
-         
+       
 def norm_color(w1, w2, w3):
     H, W = w1.shape
     x_neg = rgb2hsv(X_COLOR[1]); x_pos = rgb2hsv(X_COLOR[0])
@@ -148,29 +117,12 @@ def norm_color(w1, w2, w3):
         
 
 if __name__ == "__main__":  
-    # color = np.random.randn(100, 100, 3).astype(np.uint8)
-    # hsv = rgb2hsv(color)
-    # import pdb
-    # pdb.set_trace()
     w1 = np.random.rand(100, 100)
     w2 = np.random.rand(100, 100)
     w3 = np.random.rand(100, 100)
-    # w1 = w2 = w3 = np.array([[1]]).astype(np.float32)
+    
     m1 = norm_color(w1, w2, w3)
-    # logger.debug(w1)
-    # logger.debug(w2)
-    # logger.debug(w3)
-    # logger.debug(m1)
-    # logger.debug(m1.shape)
+
     plt.imsave("m1.png", m1)
-    pass
-    # blues = [[77, 77, 255], [102, 102, 255], [128, 128, 255]]
-    # img0 = np.ones((2,2),dtype=np.uint8)
-    # bgr_img = cv2.cvtColor(img0,cv2.COLOR_GRAY2BGR)
-    # blues_hsv = []
-    # for i in blues:
-    #     r,g,b = (i[0],i[1],i[2])
-    #     bgr_img[:,:,:] = (b,g,r) 
-    #     HSV = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2HSV)
-    #     blues_hsv.append(HSV[1,1,:].tolist())
-    #     print(blues_hsv)
+    
+
